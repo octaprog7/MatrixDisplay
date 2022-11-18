@@ -10,7 +10,14 @@ if __name__ == '__main__':
     chip_select = Pin(5, mode=Pin.OUT, value=True)
     adapter = SpiAdapter(bus=bus_spi, data_mode=None)
     display = mtrx_disp.Lmd7219(adapter, chip_select, 4)
+    
     switch = False
+    
+    for txt in "Demo", "7219":
+        display.fill(0)   # clear frame buffer
+        display.text(txt, 0, 0, 1)
+        display.show()
+        utime.sleep_ms(3000)
 
     br = 0
     while True:
