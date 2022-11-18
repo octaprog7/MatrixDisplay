@@ -24,15 +24,13 @@ class Lmd7219(Device):
         fb = framebuf.FrameBuffer(self.buffer, 8 * number, 8, framebuf.MONO_HLSB)
         self.framebuf = fb
         #
-        # Provide methods for accessing FrameBuffer graphics primitives. This is a workround
-        # because inheritance from a native class is currently unsupported.
-        # http://docs.micropython.org/en/latest/pyboard/library/framebuf.html
-        # self.fill = fb.fill     # (col)
-        # self.pixel = fb.pixel   # (x, y[, c])
-        # self.hline = fb.hline   # (x, y, w, col)
-        # self.vline = fb.vline   # (x, y, h, col)
+        # framebuf info: http://docs.micropython.org/en/latest/pyboard/library/framebuf.html
+        self.fill = fb.fill     # (col)
+        self.pixel = fb.pixel   # (x, y[, c])
+        self.hline = fb.hline   # (x, y, w, col)
+        self.vline = fb.vline   # (x, y, h, col)
         # self.line = fb.line     # (x1, y1, x2, y2, col)
-        # self.rect = fb.rect     # (x, y, w, h, col)
+        self.rect = fb.rect     # (x, y, w, h, col)
         # self.fill_rect = fb.fill_rect  # (x, y, w, h, col)
         self.text = fb.text  # (string, x, y, col=1)
         # self.scroll = fb.scroll  # (dx, dy)
@@ -54,7 +52,7 @@ class Lmd7219(Device):
 
     def _write(self, buf: bytes, enable_cs_ctrl: bool = True):
         """Запись данных по шине адресату.
-        enable_cs_ctrl - включить управление выбором чипа
+        enable_cs_ctrl - включить управление выводом chip_enable
         Writing data on the bus to the destination.
         enable_cs_ctrl - enable chip selection control"""
         # адаптер могут использовать несколько устройств на шине, поэтому,
@@ -71,6 +69,7 @@ class Lmd7219(Device):
             self.address.high()
 
     def init(self):
+        self._setup_bus()
         for command, data in (
             (Lmd7219.cmd_shutdown, 0),
             (Lmd7219.cmd_display_test, 0),
@@ -81,6 +80,7 @@ class Lmd7219(Device):
             self._write(bytes((command, data)))
 
     def set_brightness(self, value):
+        self._setup_bus()
         if not 0 <= value <= 15:
             raise ValueError(f"Brightness out of range: {value}")
         self._write(bytes((Lmd7219.cmd_intensity, value)))
@@ -97,5 +97,27 @@ class Lmd7219(Device):
                 self.adapter.bus.write(bytearray((a, b)))
             self.address.high()
 
+    def fill(self, color: int = 0):
+        """Fill the entire FrameBuffer with the specified color."""
+        self.fill(color)
 
-  
+    def set_pixel_color(self, x: int, y: int, color: int = 1):
+        """Set the specified pixel to the given color."""
+        self.pixel(x, y, color)
+
+    def get_pixel_color(self, x: int, y: int):
+        """Get the color value of the specified pixel."""
+        return self.pixel(x, y)
+
+    def rect(self, x: int, y: int, width: int, height: int, color: int = 1):
+        """Draw a rectangle at the given location, size and color.
+        The fill parameter can be set to True to fill the rectangle. Otherwise just a one pixel outline is drawn."""
+        self.rect(x, y, width, height, color)
+
+    def horiz_line(self, x: int, y: int, width: int, color: int = 1):
+        """Draw horizontal line"""
+        self.hline(x, y, width, color)
+
+    def vert_line(self, x: int, y: int, height: int, color: int = 1):
+        """Draw vertical line"""
+        self.vline(x, y, height, color)
