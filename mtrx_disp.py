@@ -29,7 +29,7 @@ class Lmd7219(Device):
         self.pixel = fb.pixel
         self.hline = fb.hline
         self.vline = fb.vline
-        # self.line = fb.line
+        self.line = fb.line
         self.rect = fb.rect
         # self.fill_rect = fb.fill_rect
         self.text = fb.text
@@ -117,3 +117,7 @@ class Lmd7219(Device):
     def vert_line(self, x: int, y: int, height: int, color: int = 1):
         """Draw vertical line"""
         self.vline(x, y, height, color)
+
+    def line(self, x0: int, y0: int, x1: int, y1: int, color: int = 1):
+        """Draw a line from a set of coordinates using the given color and a thickness of 1 pixel"""
+        self.line(x0, y0, x1, y1, color)
