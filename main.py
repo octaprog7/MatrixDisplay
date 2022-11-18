@@ -17,7 +17,9 @@ if __name__ == '__main__':
     while True:
         lt = utime.localtime()
         str_t = f"{lt[4]:02}{lt[5]:02}"
-        display.text(str_t, 0, 0, 1)
+        display.fill(0)   # clear frame buffer
+        # display.text(str_t, 0, 0, 1)
+        display.rect(0, 0, display.number<<3, 8, 1)
         display.show()
         utime.sleep_ms(1000)
         display.set_brightness(br)
