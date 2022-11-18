@@ -101,11 +101,11 @@ class Lmd7219(Device):
         """Fill the entire FrameBuffer with the specified color."""
         self.fill(color)
 
-    def set_pixel_color(self, x: int, y: int, color: int = 1):
+    def set_pixel(self, x: int, y: int, color: int = 1):
         """Set the specified pixel to the given color."""
         self.pixel(x, y, color)
 
-    def get_pixel_color(self, x: int, y: int):
+    def get_pixel(self, x: int, y: int):
         """Get the color value of the specified pixel."""
         return self.pixel(x, y)
 
