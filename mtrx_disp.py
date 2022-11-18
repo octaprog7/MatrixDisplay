@@ -21,20 +21,20 @@ class Lmd7219(Device):
         super().__init__(adapter, address, True)
         self.number = check_value(number, range(1, 33), f"Invalid number: {number}")
         self.buffer = bytearray(8 * number)
+        # framebuf info: http://docs.micropython.org/en/latest/pyboard/library/framebuf.html
         fb = framebuf.FrameBuffer(self.buffer, 8 * number, 8, framebuf.MONO_HLSB)
         self.framebuf = fb
         #
-        # framebuf info: http://docs.micropython.org/en/latest/pyboard/library/framebuf.html
-        self.fill = fb.fill     # (col)
-        self.pixel = fb.pixel   # (x, y[, c])
-        self.hline = fb.hline   # (x, y, w, col)
-        self.vline = fb.vline   # (x, y, h, col)
-        # self.line = fb.line     # (x1, y1, x2, y2, col)
-        self.rect = fb.rect     # (x, y, w, h, col)
-        # self.fill_rect = fb.fill_rect  # (x, y, w, h, col)
-        self.text = fb.text  # (string, x, y, col=1)
-        # self.scroll = fb.scroll  # (dx, dy)
-        # self.blit = fb.blit  # (fbuf, x, y[, key])
+        self.fill = fb.fill
+        self.pixel = fb.pixel
+        self.hline = fb.hline
+        self.vline = fb.vline
+        # self.line = fb.line
+        self.rect = fb.rect
+        # self.fill_rect = fb.fill_rect
+        self.text = fb.text
+        # self.scroll = fb.scroll
+        # self.blit = fb.blit
         #
         self.msb_first = False
         self.init()
@@ -50,7 +50,7 @@ class Lmd7219(Device):
             ...
         self.adapter.use_data_mode_pin = False
 
-    def _write(self, buf: bytes, enable_cs_ctrl: bool = True):
+    def _write(self, buf: bytes):
         """Запись данных по шине адресату.
         enable_cs_ctrl - включить управление выводом chip_enable
         Writing data on the bus to the destination.
@@ -61,26 +61,20 @@ class Lmd7219(Device):
         # before each write to the bus, configuration is necessary!
         self._setup_bus()
         # запись во все элементы отображения
-        if enable_cs_ctrl:
-            self.address.low()
         for _ in range(self.number):
             self.adapter.write(self.address, buf)
-        if enable_cs_ctrl:
-            self.address.high()
 
     def init(self):
-        self._setup_bus()
-        for command, data in (
+        for cmd, data in (
             (Lmd7219.cmd_shutdown, 0),
             (Lmd7219.cmd_display_test, 0),
             (Lmd7219.cmd_scan_limit, 7),
             (Lmd7219.cmd_decode_mode, 0),
             (Lmd7219.cmd_shutdown, 1),
         ):
-            self._write(bytes((command, data)))
+            self._write(bytes((cmd, data)))
 
     def set_brightness(self, value):
-        self._setup_bus()
         if not 0 <= value <= 15:
             raise ValueError(f"Brightness out of range: {value}")
         self._write(bytes((Lmd7219.cmd_intensity, value)))
@@ -90,11 +84,13 @@ class Lmd7219(Device):
         num = self.number
         for y in range(8):
             self.address.low()
-            for m in range(num):
-                a = Lmd7219.cmd_digit0 + y
-                b = self.buffer[(y * num) + m]
-                # self.adapter.bus.write(bytearray((a, b)))
-                self.adapter.bus.write(bytearray((a, b)))
+            cmd = y + Lmd7219.cmd_digit0
+            b = bytearray()
+            for index in range(num):
+                data = self.buffer[index + (y * num)]
+                b.append(cmd)
+                b.append(data)
+            self.adapter.bus.write(b)
             self.address.high()
 
     def fill(self, color: int = 0):
