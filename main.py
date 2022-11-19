@@ -13,7 +13,7 @@ if __name__ == '__main__':
     
     switch = False
     
-    for txt in "Demo", "7219":
+    for txt in "Clck", "Demo", "7219", "MMss":
         display.fill(0)   # clear frame buffer
         display.text(txt, 0, 0, 1)
         display.show()
