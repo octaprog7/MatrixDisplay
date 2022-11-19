@@ -1,4 +1,4 @@
-# MAX7217
+# MAX7219
 MicroPython module for work with MAX7219 led matrix 8x8 display.
 
 Just connect your matrix display board to Arduino, ESP or any other board with MicroPython firmware.
