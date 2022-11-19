@@ -21,15 +21,15 @@ Warning!
 The operation of a microcontroller powered by a voltage of 3.3 Volts with a matrix indicator operating from 5.0 Volts can damage the MCU!
 
 ### Arduino Nano RP2040 Connect with RP2040 Board 
-    MCU board			Level Shifter		Display
+    MCU board		Level Shifter	    Display
     -------------------------------------------------------------------
     D13 (SCK)  board pin	LV1<->HV1	    SCK display pin
     D11 (COPI) board pin	LV2<->HV2	    DIN display pin
     D10 (CS)   board pun	LV3<->HV3	    CS display pin
     +3.3 V board pin	LV pin
     +5 V board pin		HV pin
-    +5 V board pin		                        +5V display pin
-    GND board pin		GND Level Shifter pin	GND display pin
+    +5 V board pin		                    +5V display pin
+    GND board pin		GND pin	            GND display pin
 
 Don't forget to short the SJ1 jumper on the underside of the MCU board! Please
 see Nano RP2040 Connect schematic: https://content.arduino.cc/assets/ABX00053-schematics.pdf
