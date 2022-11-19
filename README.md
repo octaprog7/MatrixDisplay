@@ -26,9 +26,9 @@ The operation of a microcontroller powered by a voltage of 3.3 Volts with a matr
     D13 (SCK)  board pin	Level Shifter pin	SCK display pin
     D11 (COPI) board pin	Level Shifter pin	DIN display pin
     D10 (CS)   board pun	Level Shifter pin	CS display pin
-    +3.3 V board pin		LV Level Shifter pin
+    +3.3 V board pin	LV Level Shifter pin
     +5 V board pin		HV Level Shifter pin
-    +5 V board pin					+5V display pin
+    +5 V board pin		                        +5V display pin
     GND board pin		GND Level Shifter pin	GND display pin
 
 Don't forget to short the SJ1 jumper on the underside of the MCU board! Please
