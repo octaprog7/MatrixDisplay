@@ -40,9 +40,9 @@ Then open main.py in your IDE and run it.
 
 # Pictures
 ## IDE
-![alt text](https://github.com/octaprog7/BH1750/blob/master/ide7219.png)
+![alt text](https://github.com/octaprog7/MatrixDisplay/blob/master/ide7219.png)
 ## Breadboard
-![alt text](https://github.com/octaprog7/BH1750/blob/master/mx7219board.jpg)
+![alt text](https://github.com/octaprog7/MatrixDisplay/blob/master/mx7219board.jpg)
 
 ## Video
 ![alt text](https://www.youtube.com/watch?v=X4qcNem8NmY)
