@@ -23,11 +23,11 @@ The operation of a microcontroller powered by a voltage of 3.3 Volts with a matr
 ### Arduino Nano RP2040 Connect with RP2040 Board 
     MCU board			Level Shifter		Display
     -------------------------------------------------------------------
-    D13 (SCK)  board pin	Level Shifter pin	SCK display pin
-    D11 (COPI) board pin	Level Shifter pin	DIN display pin
-    D10 (CS)   board pun	Level Shifter pin	CS display pin
-    +3.3 V board pin	LV Level Shifter pin
-    +5 V board pin		HV Level Shifter pin
+    D13 (SCK)  board pin	LV1<->HV1	    SCK display pin
+    D11 (COPI) board pin	LV2<->HV2	    DIN display pin
+    D10 (CS)   board pun	LV3<->HV3	    CS display pin
+    +3.3 V board pin	LV pin
+    +5 V board pin		HV pin
     +5 V board pin		                        +5V display pin
     GND board pin		GND Level Shifter pin	GND display pin
 
