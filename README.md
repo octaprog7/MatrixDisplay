@@ -8,7 +8,7 @@ Supply voltage display board from 4.0 to 5.0 volts! Use five wires to connect (S
 1. +VCC (Supply voltage)
 2. GND
 3. COPI/SDO - Controller Out, Peripheral In
-4. SCK - Sirial Clock
+4. SCK - Serial Clock
 5. CS - chip select
 
 ## Connection diagram
