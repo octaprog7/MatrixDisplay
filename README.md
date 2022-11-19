@@ -45,4 +45,5 @@ Then open main.py in your IDE and run it.
 ![alt text](https://github.com/octaprog7/MatrixDisplay/blob/master/mx7219board.jpg)
 
 ## Video
-![video](https://www.youtube.com/watch?v=X4qcNem8NmY)
+Link to video: https://www.youtube.com/watch?v=X4qcNem8NmY
+
