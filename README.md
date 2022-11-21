@@ -38,6 +38,13 @@ see Nano RP2040 Connect schematic: https://content.arduino.cc/assets/ABX00053-sc
 Upload MicroPython firmware to the NANO(ESP, etc) board, and then files: main.py, mtrx_disp.py and sensor_pack folder. 
 Then open main.py in your IDE and run it.
 
+## Power Supply Requirements
+It follows from the documentation that the typical current consumption of an 8x8 LED segment (all LEDs on) is 330 mA. Therefore, it can be considered that the segment draws about 200 mA at 5 Volts. If there are 4 segments, the consumption will reach 800 mA at 5 Volts. 8 segments consume 1.6 A at 5 Volts.
+
+### Capacitors
+For every 4 segments, you need to install two capacitors in parallel with the power supply. The first is 100 uF x 16 Volts. The second 10 nF x 25..50 Volts. The terminals of these capacitors should be located as close as possible to the power terminals of the matrix indicator! The length of printed conductors or wires must be minimized!!!
+Without good power, the device will not work properly!
+
 # Pictures
 ## IDE
 ![alt text](https://github.com/octaprog7/MatrixDisplay/blob/master/ide7219.png)
