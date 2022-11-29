@@ -121,3 +121,8 @@ class Lmd7219(Device):
     def line(self, x0: int, y0: int, x1: int, y1: int, color: int = 1):
         """Draw a line from a set of coordinates using the given color and a thickness of 1 pixel"""
         self.line(x0, y0, x1, y1, color)
+
+    def scroll(self, dx: int, dy: int):
+        """Shift the contents of the FrameBuffer by the given vector.
+        This may leave a footprint of the previous colors in the FrameBuffer."""
+        self.framebuf.scroll(dx, dy)
